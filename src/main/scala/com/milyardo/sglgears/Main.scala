@@ -202,6 +202,18 @@ object Main {
     glutPostRedisplay()
   }
 
+  def reshape(width: Int, height: Int): Unit = {
+    val h: GLFloat = height / width
+
+    glViewport(0, 0, width, height)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glFrustum(-1.0, 1.0, -h, h, 5.0, 60.0)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+    glTranslatef(0.0, 0.0, -40.0)
+  }
+
   def init(): Unit = {
     //Create pointers until better array support
     val pos = malloc(sizeof[GLFloat] * 4).cast[Ptr[GLFloat]]
@@ -272,7 +284,7 @@ object Main {
     glutCreateWindow(c"Scala Native Gears")
     init()
     draw()
-//    glutDisplayFunc(funptr(render))
+//    glutDisplayFunc(funptr(draw))
 //    glutReshapeFunc(reshape)
 //    glutKeyboardFunc(key)
 //    glutSpecialFunc(special)

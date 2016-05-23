@@ -28,6 +28,7 @@ object GL {
   type GLVoid = Unit
   type GLUInt = CInt //CUnsignedInt
   type GLSizeI = CInt
+  type GLDouble = CDouble
 
   final def glBegin(mode: GLEnum): Unit = extern
   final def glClear(mask: GLBitField): Unit = extern
@@ -46,9 +47,12 @@ object GL {
       light: GLEnum, pname: GLEnum, params: Ptr[GLFloat]): Unit = extern
   final def glGenLists(range: GLSizeI): GLUInt = extern
   final def glNewList(list: GLUInt, mode: GLEnum): Unit = extern
-  final def glMaterialfv(
-      face: GLEnum, pname: GLEnum, params: Ptr[GLFloat]): Unit = extern
+  final def glMaterialfv(face: GLEnum, pname: GLEnum, params: Ptr[GLFloat]): Unit = extern
   final def glEndList(): Unit = extern
+  final def glLoadIdentity(): Unit = extern
+  final def glViewport(x: GLInt, y: GLInt, width: GLInt, height: GLInt) = extern
+  final def glMatrixMode(mode:GLEnum): Unit = extern
+  final def glFrustum(left: GLDouble, right: GLDouble, bottom: GLDouble, top: GLDouble, zNear: GLDouble, zFar: GLDouble) = extern
 }
 
 object GLConstants {
@@ -144,6 +148,11 @@ object GLConstants {
   final val GL_TEXTURE_BIT = 0x00040000
   final val GL_SCISSOR_BIT = 0x00080000
   final val GL_ALL_ATTRIB_BITS = 0x000fffff
+
+  /* MatrixMode */
+  final val GL_MODELVIEW  = 0x1700
+  final val GL_PROJECTION = 0x1701
+  final val GL_TEXTURE    = 0x1702
 }
 
 object DisplayMode {
