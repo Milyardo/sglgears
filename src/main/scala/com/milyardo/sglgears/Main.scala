@@ -22,32 +22,37 @@ object Main {
   var view_rotz: GLFloat = 0.0f
 
   var angle: GLFloat = 0.0f
-  
+
   var gear1: GLUInt = _
   var gear2: GLUInt = _
   var gear3: GLUInt = _
 
-  def gear(innerRadius: GLFloat, outerRadius: GLFloat, width: GLFloat, teeth: GLInt, toothDepth: GLFloat) = {
+  def gear(innerRadius: GLFloat,
+           outerRadius: GLFloat,
+           width: GLFloat,
+           teeth: GLInt,
+           toothDepth: GLFloat) = {
     var r0 = innerRadius
     var r1 = outerRadius - toothDepth / 2.0f
     var r2 = outerRadius + toothDepth / 2.0f
-    
+
     var da = 2.0f * M_PI / teeth / 4.0f
 
     glShadeModel(GL_FLAT)
-    
+
     glNormal3f(0.0f, 0.0f, 1.0f)
 
     /** draw front face */
     glBegin(GL_QUAD_STRIP)
 
     var i: Int = 0
-    while(i < teeth) {
+    while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5f)
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5f)
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
+      glVertex3f(
+          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
       i += 1
     }
     glEnd()
@@ -56,51 +61,56 @@ object Main {
     glBegin(GL_QUADS)
     da = 2.0f * M_PI / teeth / 4.0f
     i = 0
-    while(i < teeth) {
+    while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
-      
+
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5f)
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
+      glVertex3f(
+          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5f)
+      glVertex3f(
+          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
       i += 1
     }
     glEnd()
-    
+
     glNormal3f(0.0f, 0.0f, -1.0f)
-    
+
     /*draw back face */
     glBegin(GL_QUAD_STRIP)
     i = 0
-    while(i < teeth) {
+    while (i < teeth) {
       val angle = i * 2.0f * M_PI / teeth
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5f)
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
+      glVertex3f(
+          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5f)
       i += 1
     }
     glEnd()
-    
+
     /* draw back sides of teeth */
     glBegin(GL_QUADS)
     da = 2.0f * M_PI / teeth / 4.0f
     i = 0
-    while(i < teeth) {
+    while (i < teeth) {
       angle = i * 20 * M_PI / teeth
-      
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5f)
+
+      glVertex3f(
+          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
+      glVertex3f(
+          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5f)
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5f)
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5f)
       i += 1
     }
     glEnd()
-    
+
     /* draw outward faces of teeth */
     glBegin(GL_QUAD_STRIP)
     i = 0
-    while(i < teeth) {
+    while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5f)
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5f)
@@ -113,13 +123,17 @@ object Main {
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5f)
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5f)
       glNormal3f(cos(angle), sin(angle), 0.0f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5f)
+      glVertex3f(
+          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5f)
+      glVertex3f(
+          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5f)
       u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da)
       v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da)
       glNormal3f(v, -u, 0.0f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
+      glVertex3f(
+          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
+      glVertex3f(
+          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
       glNormal3f(cos(angle), sin(angle), 0.0f)
       i += 1
     }
@@ -135,7 +149,7 @@ object Main {
     glBegin(GL_QUAD_STRIP)
 
     i = 0
-    while(i < teeth) {
+    while (i < teeth) {
       val angle = i * 2.0f * M_PI / teeth
 
       glNormal3f(-cos(angle), -sin(angle), 0.0f)
@@ -191,7 +205,7 @@ object Main {
     }
     glutPostRedisplay()
   }
-  
+
   def init(): Unit = {
     val pos: Array[GLFloat] = Array(5.0f, 5.0f, 10.0f, 0.0f)
     val red: Array[GLFloat] = Array(0.8f, 0.1f, 0.0f, 1.0f)
@@ -233,14 +247,14 @@ object Main {
     val argv: Ptr[CString] = malloc(sizeof[CString]).cast[Ptr[CString]]
     argc(0) = 1
     argv(0) = c"./sglgears.out"
-    glutInit(argc,argv)
+    glutInit(argc, argv)
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE)
 //    glutInitWindowSize(1024,768)
 //    glutInitWindowPosition(0,0)
 
     glutCreateWindow(c"Scala Native Gears")
     init()
-    
+
 //    glutDisplayFunc(funptr(render))
 //    glutReshapeFunc(reshape)
 //    glutKeyboardFunc(key)

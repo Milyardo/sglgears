@@ -20,5 +20,5 @@ nativeClangOptions := Seq(
   "-I/usr/local/Cellar/bdw-gc/7.4.2/include",
   "-L/usr/local/Cellar/bdw-gc/7.4.2/lib",
   "-F/System/Library/Frameworks/",
-  "-framework", "GLUT", "-framework", "OpenGL", "-framework", "Cocoa"
+  "-framework", "GLUT", "-framework", "OpenGL"
 )
