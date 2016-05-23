@@ -22,7 +22,7 @@ object GLUT {
 @extern
 object GL {
   type GLBitField = CInt //CUnsignedInt
-  type GLFloat = CFloat
+  type GLFloat = CDouble //CFloat
   type GLInt = CInt
   type GLEnum = CInt //CUnsignedInt
   type GLVoid = Unit
@@ -43,11 +43,11 @@ object GL {
   final def glTranslatef(x: GLFloat, y: GLFloat, z: GLFloat): Unit = extern
   final def glCallList(list: GLUInt): Unit = extern
   final def glLightfv(
-      light: GLEnum, pname: GLEnum, params: Array[GLFloat]): Unit = extern
+      light: GLEnum, pname: GLEnum, params: Ptr[GLFloat]): Unit = extern
   final def glGenLists(range: GLSizeI): GLUInt = extern
   final def glNewList(list: GLUInt, mode: GLEnum): Unit = extern
   final def glMaterialfv(
-      face: GLEnum, pname: GLEnum, params: Array[GLFloat]): Unit = extern
+      face: GLEnum, pname: GLEnum, params: Ptr[GLFloat]): Unit = extern
   final def glEndList(): Unit = extern
 }
 
