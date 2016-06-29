@@ -47,8 +47,7 @@ object Main {
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5)
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5)
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5)
-      glVertex3f(
-          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
+      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
       i += 1
     }
     glEnd()
@@ -62,10 +61,8 @@ object Main {
 
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5)
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5)
-      glVertex3f(
-          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5)
-      glVertex3f(
-          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
+      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5)
+      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
       i += 1
     }
     glEnd()
@@ -79,8 +76,7 @@ object Main {
       val angle = i * 2.0 * M_PI / teeth
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5)
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5)
-      glVertex3f(
-          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
+      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5)
       i += 1
     }
@@ -93,10 +89,8 @@ object Main {
     while (i < teeth) {
       angle = i * 20 * M_PI / teeth
 
-      glVertex3f(
-          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
-      glVertex3f(
-          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5)
+      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
+      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5)
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5)
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5)
       i += 1
@@ -119,17 +113,13 @@ object Main {
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5)
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5)
       glNormal3f(cos(angle), sin(angle), 0.0)
-      glVertex3f(
-          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5)
-      glVertex3f(
-          r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5)
+      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5)
+      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5)
       u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da)
       v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da)
       glNormal3f(v, -u, 0.0)
-      glVertex3f(
-          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
-      glVertex3f(
-          r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
+      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5)
+      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5)
       glNormal3f(cos(angle), sin(angle), 0.0)
       i += 1
     }
@@ -196,8 +186,8 @@ object Main {
     k match {
       case 'z' => view_rotz += 5.0
       case 'Z' => view_rotz -= 5.0
-      case 27 => () //exit(0)
-      case _ => ()
+      case 27  => () //exit(0)
+      case _   => ()
     }
     glutPostRedisplay()
   }
@@ -279,7 +269,7 @@ object Main {
   def special(k: CInt, x: CInt, y: CInt): Unit = {
     k match {
       case GLUT_KEY_UP =>
-      view_rotx += 5.0
+        view_rotx += 5.0
       case GLUT_KEY_DOWN =>
         view_rotx -= 5.0
       case GLUT_KEY_LEFT =>
@@ -291,10 +281,10 @@ object Main {
     glutPostRedisplay()
   }
 
-    def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit = {
     import DisplayMode._
 
-    val argc: Ptr[CInt] = malloc(sizeof[CInt]).cast[Ptr[CInt]]
+    val argc: Ptr[CInt]    = malloc(sizeof[CInt]).cast[Ptr[CInt]]
     val argv: Ptr[CString] = malloc(sizeof[CString]).cast[Ptr[CString]]
     argc(0) = 1
     argv(0) = c"./sglgears.out"
@@ -306,9 +296,9 @@ object Main {
     glutCreateWindow(c"Scala Native Gears")
     init()
     glutDisplayFunc(() => ())
-    glutReshapeFunc((x: CInt, y: CInt) => reshape(x,y))
-    glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k,x,y))
-    glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k,x,y))
+    glutReshapeFunc((x: CInt, y: CInt) => reshape(x, y))
+    glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k, x, y))
+    glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k, x, y))
     glutVisibilityFunc((state: CInt) => visible(state))
     glutMainLoop()
   }

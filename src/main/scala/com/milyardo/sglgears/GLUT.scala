@@ -24,6 +24,7 @@ object GLUT {
 }
 
 object GLUTConstants {
+
   /** directional keys **/
   final val GLUT_KEY_LEFT      = 100
   final val GLUT_KEY_UP        = 101
