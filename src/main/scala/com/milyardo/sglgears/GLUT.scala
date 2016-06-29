@@ -45,7 +45,7 @@ object GLUTConstants {
 @extern
 object GL {
   type GLBitField = CInt //CUnsignedInt
-  type GLFloat    = CDouble //CFloat
+  type GLFloat    = CFloat
   type GLInt      = CInt
   type GLEnum     = CInt //CUnsignedInt
   type GLVoid     = Unit
