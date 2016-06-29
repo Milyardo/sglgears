@@ -7,14 +7,14 @@ import java.lang.Math.{sin, cos, sqrt}
 
 object Main {
   import GLUT._
+  import GLUTConstants._
   import GL._
   import GLConstants._
 
-  
   val M_PI = 3.14159265
 
-  val view_rotx: GLFloat = 20.0
-  val view_roty: GLFloat = 30.0
+  var view_rotx: GLFloat = 20.0
+  var view_roty: GLFloat = 30.0
   var view_rotz: GLFloat = 0.0
 
   var angle: GLFloat = 0.0
@@ -28,9 +28,9 @@ object Main {
            width: GLFloat,
            teeth: GLInt,
            toothDepth: GLFloat) = {
-    var r0 = innerRadius
-    var r1 = outerRadius - toothDepth / 2.0
-    var r2 = outerRadius + toothDepth / 2.0
+    val r0 = innerRadius
+    val r1 = outerRadius - toothDepth / 2.0
+    val r2 = outerRadius + toothDepth / 2.0
 
     var da = 2.0 * M_PI / teeth / 4.0
 
@@ -226,7 +226,7 @@ object Main {
     red(0) = 0.8
     red(1) = 0.1
     red(2) = 0.0
-    red(3) =1.0
+    red(3) = 1.0
 
     val green = malloc(sizeof[GLFloat] * 4).cast[Ptr[GLFloat]]
     green(0) = 0.0
@@ -269,7 +269,29 @@ object Main {
     glEnable(GL_NORMALIZE)
   }
 
-  def main(args: Array[String]): Unit = {
+  def visible(vis: CInt): Unit = {
+    if (vis == GLUT_VISIBLE)
+      glutIdleFunc(() => idle())
+    else
+      glutIdleFunc(null)
+  }
+
+  def special(k: CInt, x: CInt, y: CInt): Unit = {
+    k match {
+      case GLUT_KEY_UP =>
+      view_rotx += 5.0
+      case GLUT_KEY_DOWN =>
+        view_rotx -= 5.0
+      case GLUT_KEY_LEFT =>
+        view_roty += 5.0
+      case GLUT_KEY_RIGHT =>
+        view_roty -= 5.0
+      case _ => ()
+    }
+    glutPostRedisplay()
+  }
+
+    def main(args: Array[String]): Unit = {
     import DisplayMode._
 
     val argc: Ptr[CInt] = malloc(sizeof[CInt]).cast[Ptr[CInt]]
@@ -278,17 +300,16 @@ object Main {
     argv(0) = c"./sglgears.out"
     glutInit(argc, argv)
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE)
-    glutInitWindowSize(1024,768)
-    glutInitWindowPosition(0,0)
+    glutInitWindowSize(1024, 768)
+    glutInitWindowPosition(0, 0)
 
     glutCreateWindow(c"Scala Native Gears")
     init()
-    draw()
-//    glutDisplayFunc(funptr(draw))
-//    glutReshapeFunc(reshape)
-//    glutKeyboardFunc(key)
-//    glutSpecialFunc(special)
-//    glutVisibilityFunc(visible)
+    glutDisplayFunc(() => ())
+    glutReshapeFunc((x: CInt, y: CInt) => reshape(x,y))
+    glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k,x,y))
+    glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k,x,y))
+    glutVisibilityFunc((state: CInt) => visible(state))
     glutMainLoop()
   }
 }
