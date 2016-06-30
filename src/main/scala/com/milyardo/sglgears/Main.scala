@@ -29,7 +29,7 @@ object Main {
   var gear2: GLUInt = _
   var gear3: GLUInt = _
 
-  def gear(innerRadius: GLFloat,
+  final def gear(innerRadius: GLFloat,
            outerRadius: GLFloat,
            width: GLFloat,
            teeth: GLInt,
@@ -152,7 +152,7 @@ object Main {
     glEnd()
   }
 
-  def draw(): Unit = {
+  final def draw(): Unit = {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     glPushMatrix()
@@ -198,7 +198,7 @@ object Main {
     glutPostRedisplay()
   }
 
-  def reshape(width: Int, height: Int): Unit = {
+  final def reshape(width: Int, height: Int): Unit = {
     val h: GLFloat = height / width
 
     glViewport(0, 0, width, height)
@@ -210,7 +210,7 @@ object Main {
     glTranslatef(0.0f, 0.0f, -40.0f)
   }
 
-  def init(): Unit = {
+  final def init(): Unit = {
     //Create pointers until better array support
     val pos = malloc(sizeof[GLFloat] * 4).cast[Ptr[GLFloat]]
     pos(0) = 5.0f
@@ -252,7 +252,7 @@ object Main {
 
     gear2 = glGenLists(1)
     glNewList(gear2, GL_COMPILE)
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green)
+    //glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green)
     gear(0.5f, 2.0f, 2.0f, 10, 0.7f)
     glEndList()
 
@@ -265,14 +265,14 @@ object Main {
     glEnable(GL_NORMALIZE)
   }
 
-  def visible(vis: CInt): Unit = {
+  final def visible(vis: CInt): Unit = {
     if (vis == GLUT_VISIBLE)
       glutIdleFunc(() => idle())
     else
       glutIdleFunc(null)
   }
 
-  def special(k: CInt, x: CInt, y: CInt): Unit = {
+  final def special(k: CInt, x: CInt, y: CInt): Unit = {
     k match {
       case GLUT_KEY_UP =>
         view_rotx += 5.0f
@@ -301,10 +301,10 @@ object Main {
     init()
 
     glutDisplayFunc(() => draw())
-    glutReshapeFunc((x: CInt, y: CInt) => reshape(x, y))
-    glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k, x, y))
-    glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k, x, y))
-    glutVisibilityFunc((state: CInt) => visible(state))
+    //glutReshapeFunc((x: CInt, y: CInt) => reshape(x, y))
+    //glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k, x, y))
+    //glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k, x, y))
+    //glutVisibilityFunc((state: CInt) => visible(state))
     glutMainLoop()
   }
 }
