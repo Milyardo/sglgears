@@ -1,21 +1,14 @@
 package com.milyardo.sglgears
 
 import scala.scalanative._
-import native._, libc.stdlib._
+import native._, stdlib._
 
-object FloatMath {
-  import java.lang.Math
-
-  @inline final def cos(f: Float): Float = Math.cos(f.toDouble).toFloat
-  @inline final def sin(f: Float): Float = Math.sin(f.toDouble).toFloat
-  @inline final def sqrt(f: Float): Float = Math.sqrt(f.toDouble).toFloat
-}
 object Main {
   import GLUT._
   import GLUTConstants._
   import GL._
   import GLConstants._
-  import FloatMath._
+  import math._
 
   val M_PI = 3.14159265f
 
@@ -50,10 +43,10 @@ object Main {
     var i: Int = 0
     while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
-      glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5f)
-      glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5f)
-      glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
+      glVertex3f(r0 * cosf(angle), r0 * sinf(angle), width * 0.5f)
+      glVertex3f(r1 * cosf(angle), r1 * sinf(angle), width * 0.5f)
+      glVertex3f(r0 * cosf(angle), r0 * sinf(angle), width * 0.5f)
+      glVertex3f(r1 * cosf(angle + 3 * da), r1 * sinf(angle + 3 * da), width * 0.5f)
       i += 1
     }
     glEnd()
@@ -65,10 +58,10 @@ object Main {
     while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
 
-      glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5f)
-      glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
+      glVertex3f(r1 * cosf(angle), r1 * sinf(angle), width * 0.5f)
+      glVertex3f(r2 * cosf(angle + da), r2 * sinf(angle + da), width * 0.5f)
+      glVertex3f(r2 * cosf(angle + 2 * da), r2 * sinf(angle + 2 * da), width * 0.5f)
+      glVertex3f(r1 * cosf(angle + 3 * da), r1 * sinf(angle + 3 * da), width * 0.5f)
       i += 1
     }
     glEnd()
@@ -80,10 +73,10 @@ object Main {
     i = 0
     while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
-      glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5f)
-      glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
-      glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5f)
+      glVertex3f(r1 * cosf(angle), r1 * sinf(angle), -width * 0.5f)
+      glVertex3f(r0 * cosf(angle), r0 * sinf(angle), -width * 0.5f)
+      glVertex3f(r1 * cosf(angle + 3 * da), r1 * sinf(angle + 3 * da), -width * 0.5f)
+      glVertex3f(r0 * cosf(angle), r0 * sinf(angle), -width * 0.5f)
       i += 1
     }
     glEnd()
@@ -95,10 +88,10 @@ object Main {
     while (i < teeth) {
       angle = i * 20 * M_PI / teeth
 
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5f)
-      glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5f)
-      glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5f)
+      glVertex3f(r1 * cosf(angle + 3 * da), r1 * sinf(angle + 3 * da), -width * 0.5f)
+      glVertex3f(r2 * cosf(angle + 2 * da), r2 * sinf(angle + 2 * da), -width * 0.5f)
+      glVertex3f(r2 * cosf(angle + da), r2 * sinf(angle + da), -width * 0.5f)
+      glVertex3f(r1 * cosf(angle), r1 * sinf(angle), -width * 0.5f)
       i += 1
     }
     glEnd()
@@ -108,30 +101,30 @@ object Main {
     i = 0
     while (i < teeth) {
       angle = i * 2.0f * M_PI / teeth
-      glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5f)
-      glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5f)
-      var u = r2 * cos(angle + da) - r1 * cos(angle)
-      var v = r2 * sin(angle + da) - r1 * sin(angle)
-      val len = sqrt(u * u + v * v)
+      glVertex3f(r1 * cosf(angle), r1 * sinf(angle), width * 0.5f)
+      glVertex3f(r1 * cosf(angle), r1 * sinf(angle), -width * 0.5f)
+      var u = r2 * cosf(angle + da) - r1 * cosf(angle)
+      var v = r2 * sinf(angle + da) - r1 * sinf(angle)
+      val len = sqrtf(u * u + v * v)
       u = u / len
       v = u / len
       glNormal3f(v, -u, 0.0f)
-      glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5f)
-      glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5f)
-      glNormal3f(cos(angle), sin(angle), 0.0f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), width * 0.5f)
-      glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da), -width * 0.5f)
-      u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da)
-      v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da)
+      glVertex3f(r2 * cosf(angle + da), r2 * sinf(angle + da), width * 0.5f)
+      glVertex3f(r2 * cosf(angle + da), r2 * sinf(angle + da), -width * 0.5f)
+      glNormal3f(cosf(angle), sinf(angle), 0.0f)
+      glVertex3f(r2 * cosf(angle + 2 * da), r2 * sinf(angle + 2 * da), width * 0.5f)
+      glVertex3f(r2 * cosf(angle + 2 * da), r2 * sinf(angle + 2 * da), -width * 0.5f)
+      u = r1 * cosf(angle + 3 * da) - r2 * cosf(angle + 2 * da)
+      v = r1 * sinf(angle + 3 * da) - r2 * sinf(angle + 2 * da)
       glNormal3f(v, -u, 0.0f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), width * 0.5f)
-      glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da), -width * 0.5f)
-      glNormal3f(cos(angle), sin(angle), 0.0f)
+      glVertex3f(r1 * cosf(angle + 3 * da), r1 * sinf(angle + 3 * da), width * 0.5f)
+      glVertex3f(r1 * cosf(angle + 3 * da), r1 * sinf(angle + 3 * da), -width * 0.5f)
+      glNormal3f(cosf(angle), sinf(angle), 0.0f)
       i += 1
     }
 
-    glVertex3f(r1 * cos(0.0f), r1 * sin(0.0f), width * 0.5f)
-    glVertex3f(r1 * cos(0.0f), r1 * sin(0.0f), -width * 0.5f)
+    glVertex3f(r1 * cosf(0.0f), r1 * sinf(0.0f), width * 0.5f)
+    glVertex3f(r1 * cosf(0.0f), r1 * sinf(0.0f), -width * 0.5f)
 
     glEnd()
 
@@ -144,9 +137,9 @@ object Main {
     while (i < teeth) {
       val angle = i * 2.0f * M_PI / teeth
 
-      glNormal3f(-cos(angle), -sin(angle), 0.0f)
-      glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5f)
-      glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5f)
+      glNormal3f(-cosf(angle), -sinf(angle), 0.0f)
+      glVertex3f(r0 * cosf(angle), r0 * sinf(angle), -width * 0.5f)
+      glVertex3f(r0 * cosf(angle), r0 * sinf(angle), width * 0.5f)
       i += 1
     }
     glEnd()
@@ -269,7 +262,7 @@ object Main {
     if (vis == GLUT_VISIBLE)
       glutIdleFunc(() => idle())
     else
-      glutIdleFunc(null)
+      glutIdleFunc(() => ())
   }
 
   final def special(k: CInt, x: CInt, y: CInt): Unit = {
@@ -301,10 +294,10 @@ object Main {
     init()
 
     glutDisplayFunc(() => draw())
-    //glutReshapeFunc((x: CInt, y: CInt) => reshape(x, y))
-    //glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k, x, y))
-    //glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k, x, y))
-    //glutVisibilityFunc((state: CInt) => visible(state))
+    glutReshapeFunc((x: CInt, y: CInt) => reshape(x, y))
+    glutKeyboardFunc((k: CChar, x: CInt, y: CInt) => key(k, x, y))
+    glutSpecialFunc((k: CInt, x: CInt, y: CInt) => special(k, x, y))
+    glutVisibilityFunc((state: CInt) => visible(state))
     glutMainLoop()
   }
 }

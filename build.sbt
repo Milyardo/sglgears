@@ -5,14 +5,6 @@ description := "gears.c ported to scala using scala.native."
 
 scalaVersion := "2.11.8"
 
-libraryDependencies ++= Seq(
-  "org.scala-native" %% "scalalib" % "0.1-SNAPSHOT",
-  "org.scala-native" %% "clib" % "0.1-SNAPSHOT",
-  "org.scala-native" %% "scalalib" % "0.1-SNAPSHOT",
-  "org.scala-native" %% "javalib" % "0.1-SNAPSHOT",
-  "org.scala-native" %% "nativelib" % "0.1-SNAPSHOT"
-)
-
 nativeVerbose := true
 
 nativeClangOptions := Seq(
