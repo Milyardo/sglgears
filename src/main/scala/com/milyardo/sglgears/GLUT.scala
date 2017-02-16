@@ -6,6 +6,7 @@ import scala.scalanative.native._
   * Created by zpowers on 5/15/16.
   */
 @extern
+@link("glut")
 object GLUT {
   final def glutInit(argc: Ptr[CInt], argv: Ptr[Ptr[CChar]]): Unit               = extern
   final def glutInitDisplayMode(mode: DisplayMode.Type): Unit                    = extern
@@ -43,6 +44,7 @@ object GLUTConstants {
 }
 
 @extern
+@link("GL")
 object GL {
   type GLBitField = CUnsignedInt
   type GLFloat    = CFloat
