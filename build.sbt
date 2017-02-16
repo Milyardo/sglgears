@@ -5,12 +5,8 @@ description := "gears.c ported to scala using scala.native."
 
 scalaVersion := "2.11.8"
 
-nativeVerbose := true
-
-nativeClangOptions := Seq(
-  "-O2",
-  "-I/usr/local/Cellar/bdw-gc/7.4.2/include",
-  "-L/usr/local/Cellar/bdw-gc/7.4.2/lib",
-  "-F/System/Library/Frameworks/",
+nativeClangOptions ++= Seq(
+  //"-O2",
+  "-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/",
   "-framework", "GLUT", "-framework", "OpenGL"
 )

@@ -2,15 +2,15 @@ package com.milyardo.sglgears
 
 import scala.scalanative._
 import native._, stdlib._
+import GLUT._
+import GLUTConstants._
+import GL._
+import GLConstants._
+import math._
 
 object Main {
-  import GLUT._
-  import GLUTConstants._
-  import GL._
-  import GLConstants._
-  import math._
 
-  val M_PI = 3.14159265f
+  final val M_PI = 3.14159265f
 
   var view_rotx: GLFloat = 20.0f
   var view_roty: GLFloat = 30.0f
@@ -192,7 +192,7 @@ object Main {
   }
 
   final def reshape(width: Int, height: Int): Unit = {
-    val h: GLFloat = height / width
+    val h: GLDouble = height.toDouble / width.toDouble
 
     glViewport(0, 0, width, height)
     glMatrixMode(GL_PROJECTION)
